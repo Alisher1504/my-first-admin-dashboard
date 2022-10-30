@@ -24,14 +24,18 @@ use App\Http\Controllers\Frontend\FrontendController;
 
 Auth::routes();
 
-
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/color', [App\Http\Controllers\Frontend\FrontendController::class, 'index']);
-Route::get('tutorial/{category_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'viewCategory']);
-Route::get('tutorial/{category_slug}/{post_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'viewPost']);
+
+Route::group(['middleware' => ['web', 'isStudent']], function() {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/color', [App\Http\Controllers\Frontend\FrontendController::class, 'index']);
+    Route::get('tutorial/{category_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'viewCategory']);
+    Route::get('tutorial/{category_slug}/{post_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'viewPost']);
+}); 
+
+
 
 // Route::post('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -56,12 +60,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('users', [App\Http\Controllers\Admin\UserController::class, 'index']);
     Route::get('user/{user_id}', [App\Http\Controllers\Admin\UserController::class, 'edit']);
     Route::put('update-user/{user_id}', [App\Http\Controllers\Admin\UserController::class, 'update']);
-
-
-
-
-
-
+    Route::get('delete/{id}', [App\Http\Controllers\Admin\PostController::class, 'delete']);
 
 });
 

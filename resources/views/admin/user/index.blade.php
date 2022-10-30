@@ -27,6 +27,7 @@
                             <th>Email</th>
                             <th>Role</th>
                             <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
 
@@ -42,7 +43,10 @@
                                 <td>
                                     <a href="{{ url('admin/user/' . $item->id) }}" class="btn btn-success">Edit</a>
                                 </td>
-                                
+                                <td>
+                                    <a href="{{ url('admin/delete/' . $item->id) }}" class="btn btn-danger">Delete</a>
+                                </td>
+
                             </tr>
 
                         @endforeach

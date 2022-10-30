@@ -31,4 +31,10 @@ class UserController extends Controller
         return redirect('admin/users')->with('essage', 'No User Found');
     }
 
+    public function destroy($id) {
+        $users = User::find($id);
+        $users->delete();
+        return redirect('admin/users');
+    }
+
 }
