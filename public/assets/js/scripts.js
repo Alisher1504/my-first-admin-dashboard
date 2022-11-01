@@ -24,3 +24,11 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+
+/**
+* Template Name: Mentor - v4.9.1
+* Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/

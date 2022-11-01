@@ -40,6 +40,10 @@ Route::group(['middleware' => ['web', 'isStudent']], function() {
 // Route::post('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/color', [App\Http\Controllers\Frontend\FrontendController::class, 'index']);
+ Route::get('tutorial/{category_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'viewCategory']);
+    Route::get('tutorial/{category_slug}/{post_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'viewPost']);
 
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
     Route::get('category', [App\Http\Controllers\Admin\CategoryController::class, 'index']);
