@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -26,8 +27,33 @@ class FrontendController extends Controller
     public function viewCategory(string $category_slug) {
         $category = Category::where('slug', $category_slug)->where('status', '0')->first();
         if($category) {
-            $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
-            return view('frontend.post.index', compact('post', 'category'));
+            if(Auth::user()->role_as == '2' && Auth::user()->fani == '0') {
+                $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
+                return view('frontend.post.index', compact('post', 'category'));
+            }
+            if(Auth::user()->role_as == '2' && Auth::user()->fani == '1') {
+                $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
+                return view('frontend.post.front', compact('post', 'category'));
+            }
+            if(Auth::user()->role_as == '2' && Auth::user()->fani == '2') {
+                $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
+                return view('frontend.post.bac', compact('post', 'category'));
+            }
+            if(Auth::user()->role_as == '2' && Auth::user()->fani == '3') {
+                $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
+                return view('frontend.post.blemdr', compact('post', 'category'));
+            }
+            if(Auth::user()->role_as == '2' && Auth::user()->fani == '4') {
+                $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
+                return view('frontend.post.komp', compact('post', 'category'));
+            }
+            // if(Auth::user()->role_as == '2' && Auth::user()->fani == '5') {
+            //     $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
+            //     return view('frontend.post.blemdr', compact('post', 'category'));
+            // }
+            else {
+                return redirect('/home');
+            }
         }
         else {
             return redirect('/');
